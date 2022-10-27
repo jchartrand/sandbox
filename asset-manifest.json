@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/sandbox/static/css/main.faa80b58.chunk.css",
+    "main.js": "/sandbox/static/js/main.39324434.chunk.js",
+    "main.js.map": "/sandbox/static/js/main.39324434.chunk.js.map",
+    "runtime-main.js": "/sandbox/static/js/runtime-main.6d46fde7.js",
+    "runtime-main.js.map": "/sandbox/static/js/runtime-main.6d46fde7.js.map",
+    "static/js/2.2ad7c1d6.chunk.js": "/sandbox/static/js/2.2ad7c1d6.chunk.js",
+    "static/js/2.2ad7c1d6.chunk.js.map": "/sandbox/static/js/2.2ad7c1d6.chunk.js.map",
+    "index.html": "/sandbox/index.html",
+    "static/css/main.faa80b58.chunk.css.map": "/sandbox/static/css/main.faa80b58.chunk.css.map",
+    "static/js/2.2ad7c1d6.chunk.js.LICENSE.txt": "/sandbox/static/js/2.2ad7c1d6.chunk.js.LICENSE.txt",
+    "static/media/DCC Logo-White Text on Transparent-896x278.58788bbf.png": "/sandbox/static/media/DCC Logo-White Text on Transparent-896x278.58788bbf.png",
+    "static/media/main.css": "/sandbox/static/media/icons.0c5c148c.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6d46fde7.js",
+    "static/js/2.2ad7c1d6.chunk.js",
+    "static/css/main.faa80b58.chunk.css",
+    "static/js/main.39324434.chunk.js"
+  ]
+}
