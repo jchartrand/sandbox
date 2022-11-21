@@ -18,6 +18,10 @@ import { Link } from 'react-router-dom'
 import useDocumentTitle from '../utils/useDocumentTitle';
 import {DropzoneArea, DropzoneDialog} from 'mui-file-dropzone';
 import { EditAttributesRounded } from '@mui/icons-material';
+import { securityLoader } from '@digitalcredentials/security-document-loader'
+import { encodeToQrCodeUrl, encodeToVpUnsigned } from "../utils/codecs";
+import { ProvePresentationRequest } from "../api/index";
+import { encodeToRawQrCodeUrl } from '../api/encodeRawQr';
 
 
 export const Issue: FC<SigningProps> = ({
@@ -42,6 +46,8 @@ export const Issue: FC<SigningProps> = ({
     }
   );
   const [signingError, setSigningError] = useState<Error>();
+  const [compressedQrCodeUrl, setCompressedQrCodeUrl] = useState('');
+  const [rawQrCodeUrl, setRawQrCodeUrl] = useState('');
 
   // Call local signing function on submit
   const handleSubmit = async (event: any) => {
@@ -52,13 +58,24 @@ export const Issue: FC<SigningProps> = ({
       const signedDocument = await signCredential(documentJSON, options);
       // For some reason this delay allows the results to render before page scroll
       await new Promise(resolve => setTimeout(resolve, 1));
+      // Encode the signed VC into an unsigned VP
+      const vpUnsigned = encodeToVpUnsigned(signedDocument);
+      // const vpSigned = (await ProvePresentationRequest(vpUnsigned)).data;
+      // Encode the unsigned VP into QR codes
+      const compressedQrCode = await encodeToQrCodeUrl(vpUnsigned);
+      setCompressedQrCodeUrl(compressedQrCode);
+      const rawQrCode = await encodeToRawQrCodeUrl(vpUnsigned);
+      setRawQrCodeUrl(rawQrCode);
+      console.log(compressedQrCode);
       // If no errors are thrown, store signed credential
       setSignedDocument(signedDocument);
       setSigningError(undefined);
       setLoading(false);
       // Scroll down to signed credential box
       const element = document.getElementById("signedcredential");
-      element.scrollIntoView();
+      if (element) {
+        element.scrollIntoView();
+      }
     } catch (error) {
       // Store any errors
       setSigningError(error);
@@ -130,8 +147,7 @@ export const Issue: FC<SigningProps> = ({
             Enter your credential below
           </Typography>
         </Box>
-
-
+        
         {/* Credential Editor Box */}
         <Credential
           value={unsignedDocument}
@@ -234,6 +250,27 @@ export const Issue: FC<SigningProps> = ({
             editing={false}
             value={signedDocument ? JSON.stringify(signedDocument, null, 2) : "{}"}
           />
+        
+        <Box
+          component="img"
+          sx={{
+            height: 350,
+            width: 350,
+          }}
+          alt="Compressed QR code."
+          src={compressedQrCodeUrl}
+        />
+
+        <Box
+          component="img"
+          sx={{
+            height: 350,
+            width: 350,
+          }}
+          alt="Uncompressed QR code."
+          src={rawQrCodeUrl}
+        />
+
         </Grid>
       }
 

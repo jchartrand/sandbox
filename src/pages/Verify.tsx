@@ -45,7 +45,9 @@ export const Verify: FC<VerificationProps> = ({
       setLoading(false);
       // Scroll down to verification results box
       const element = document.getElementById("results");
-      element.scrollIntoView();
+      if (element){
+        element.scrollIntoView();
+      }
     }
 
   };
